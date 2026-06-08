@@ -17,6 +17,9 @@
       ],
       "@finserv/services/*": [
         "../../services/*"
+      ],
+      "@finserv/api-types/*": [
+        "../../packages/api-types/src/*"
       ]
     },
     "allowJs": true
