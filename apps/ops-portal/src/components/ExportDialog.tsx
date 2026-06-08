@@ -32,6 +32,18 @@ export function ExportDialog({ onClose, customers }: ExportDialogProps) {
         throw new Error(data.error || 'Export failed');
       }
 
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download =
+        response.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] ??
+        `${selectedCustomer.replace(/\s+/g, '_')}_transactions.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
       setExportState('success');
     } catch (err) {
       setExportState('error');
@@ -75,7 +87,7 @@ export function ExportDialog({ onClose, customers }: ExportDialogProps) {
 
         {exportState === 'success' && (
           <div className="mt-4 rounded-md bg-green-50 p-3">
-            <p className="text-sm text-green-700">Download started</p>
+            <p className="text-sm text-green-700">Export downloaded successfully</p>
           </div>
         )}
 
