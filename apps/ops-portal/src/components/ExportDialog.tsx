@@ -5,11 +5,13 @@ import { useState } from 'react';
 interface ExportDialogProps {
   onClose: () => void;
   customers: string[];
+  startDate?: string;
+  endDate?: string;
 }
 
 type ExportState = 'idle' | 'loading' | 'success' | 'error';
 
-export function ExportDialog({ onClose, customers }: ExportDialogProps) {
+export function ExportDialog({ onClose, customers, startDate, endDate }: ExportDialogProps) {
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [exportState, setExportState] = useState<ExportState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,7 +26,11 @@ export function ExportDialog({ onClose, customers }: ExportDialogProps) {
       const response = await fetch('/api/export', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customer: selectedCustomer }),
+        body: JSON.stringify({
+          customer: selectedCustomer,
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
+        }),
       });
 
       if (!response.ok) {

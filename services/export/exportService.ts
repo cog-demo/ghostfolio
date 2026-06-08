@@ -25,11 +25,15 @@ export async function exportTransactions(options: ExportOptions): Promise<Export
 }
 
 async function generateExport(options: ExportOptions): Promise<ExportResult> {
-  const { customer } = options;
+  const { customer, startDate, endDate } = options;
   const startTime = Date.now();
 
-  // Fetch ALL transactions for this customer into memory
-  const transactions = await transactionRepository.getByCustomer(customer);
+  // Fetch transactions for this customer, filtered by date range if specified
+  const transactions = await transactionRepository.query({
+    customerName: customer,
+    startDate,
+    endDate,
+  });
 
   // Build the entire CSV string in memory before writing
   const csvHeader = 'transaction_id,customer,amount,currency,status,timestamp,category,reference\n';

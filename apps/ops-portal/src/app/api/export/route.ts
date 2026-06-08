@@ -4,13 +4,13 @@ import { exportTransactions } from '@finserv/services/export/exportService';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { customer } = body;
+    const { customer, startDate, endDate } = body;
 
     if (!customer) {
       return NextResponse.json({ error: 'Customer is required' }, { status: 400 });
     }
 
-    const result = await exportTransactions({ customer });
+    const result = await exportTransactions({ customer, startDate, endDate });
 
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: 500 });

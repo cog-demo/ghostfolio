@@ -45,6 +45,14 @@ class TransactionRepository {
       results = results.filter((r) => r.status === filter.status);
     }
 
+    if (filter.startDate) {
+      results = results.filter((r) => r.timestamp.slice(0, 10) >= filter.startDate!);
+    }
+
+    if (filter.endDate) {
+      results = results.filter((r) => r.timestamp.slice(0, 10) <= filter.endDate!);
+    }
+
     if (filter.minAmount !== undefined) {
       results = results.filter((r) => r.amount >= filter.minAmount!);
     }
