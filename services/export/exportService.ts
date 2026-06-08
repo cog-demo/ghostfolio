@@ -55,6 +55,7 @@ async function generateExport(options: ExportOptions): Promise<ExportResult> {
   return {
     success: true,
     rowCount,
+    csvContent: fullCsv,
     duration,
   };
 }

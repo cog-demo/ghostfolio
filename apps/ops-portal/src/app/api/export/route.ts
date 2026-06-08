@@ -16,10 +16,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: result.error }, { status: 500 });
     }
 
-    return NextResponse.json({
-      success: true,
-      rowCount: result.rowCount,
-      message: 'Download started',
+    const filename = `transactions-${customer.replace(/\s+/g, '_').toLowerCase()}.csv`;
+
+    return new Response(result.csvContent, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      },
     });
   } catch (error) {
     // TODO: Add structured logging for export failures

@@ -8,6 +8,8 @@ describe('exportService', () => {
       expect(result.success).toBe(true);
       expect(result.rowCount).toBeGreaterThan(0);
       expect(result.rowCount).toBeLessThan(100);
+      expect(result.csvContent).toBeDefined();
+      expect(result.csvContent).toContain('transaction_id,customer,amount,currency,status,timestamp,category,reference');
       expect(result.error).toBeUndefined();
     });
 
@@ -53,6 +55,10 @@ describe('exportService', () => {
 
       expect(result.success).toBe(true);
       expect(result.rowCount).toBeGreaterThan(0);
+      expect(result.csvContent).toBeDefined();
+      const lines = result.csvContent!.split('\n').filter(Boolean);
+      expect(lines[0]).toBe('transaction_id,customer,amount,currency,status,timestamp,category,reference');
+      expect(lines.length).toBe(result.rowCount! + 1); // rows + header
     });
   });
 });

@@ -8,6 +8,7 @@ export interface ExportOptions {
 export interface ExportResult {
   success: boolean;
   rowCount?: number;
+  csvContent?: string;
   filePath?: string;
   error?: string;
   duration?: number;

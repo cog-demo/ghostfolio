@@ -32,6 +32,20 @@ export function ExportDialog({ onClose, customers }: ExportDialogProps) {
         throw new Error(data.error || 'Export failed');
       }
 
+      const blob = await response.blob();
+      const disposition = response.headers.get('Content-Disposition');
+      const filenameMatch = disposition?.match(/filename="(.+?)"/);
+      const filename = filenameMatch?.[1] ?? `transactions-export.csv`;
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
       setExportState('success');
     } catch (err) {
       setExportState('error');
