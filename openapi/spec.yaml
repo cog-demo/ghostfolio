@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: FinServ Co Internal API
+  description: Internal Operations Portal API for financial transaction management and data export.
+  version: 1.0.0
+
+servers:
+  - url: /api
+    description: Internal API base path
+
+paths:
+  /export:
+    post:
+      operationId: exportTransactions
+      summary: Export customer transactions
+      description: |
+        Generates a CSV export for the specified customer's transactions.
+        Returns metadata about the export result (row count, success status).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+      responses:
+        '200':
+          description: Export completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportSuccessResponse'
+        '400':
+          description: Invalid request (e.g. missing customer)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error or export failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ExportRequest:
+      type: object
+      required:
+        - customer
+      properties:
+        customer:
+          type: string
+          description: Customer identifier to export transactions for
+        startDate:
+          type: string
+          description: Optional start date filter (ISO 8601)
+        endDate:
+          type: string
+          description: Optional end date filter (ISO 8601)
+        format:
+          type: string
+          enum:
+            - csv
+            - json
+          description: Output format (defaults to csv)
+
+    ExportSuccessResponse:
+      type: object
+      required:
+        - success
+        - rowCount
+        - message
+      properties:
+        success:
+          type: boolean
+          enum:
+            - true
+        rowCount:
+          type: integer
+          description: Number of transaction rows exported
+        message:
+          type: string
+          description: Human-readable status message
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
