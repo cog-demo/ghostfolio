@@ -4,14 +4,30 @@
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
-      { "name": "next" }
+      {
+        "name": "next"
+      }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@finserv/ui/*": ["../../packages/ui/src/*"],
-      "@finserv/services/*": ["../../services/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@finserv/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@finserv/services/*": [
+        "../../services/*"
+      ]
+    },
+    "allowJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
