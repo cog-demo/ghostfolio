@@ -3,8 +3,8 @@ import Link from 'next/link';
 const navigation = [
   { name: 'Dashboard', href: '/', icon: DashboardIcon },
   { name: 'Transactions', href: '/transactions', icon: TransactionsIcon },
-  { name: 'Reports', href: '#', icon: ReportsIcon },
-  { name: 'Settings', href: '#', icon: SettingsIcon },
+  { name: 'Reports', href: '/reports', icon: ReportsIcon },
+  { name: 'Settings', href: '/settings', icon: SettingsIcon },
 ];
 
 export function Sidebar() {
