@@ -1,40 +1,23 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
+    "target": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "emitDecoratorMetadata": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "strict": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@ghostfolio/api/*": ["apps/api/src/*"],
-      "@ghostfolio/client/*": ["apps/client/src/app/*"],
-      "@ghostfolio/common/*": ["libs/common/src/lib/*"],
-      "@ghostfolio/ui/*": ["libs/ui/src/lib/*"]
-    },
-    "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
-    "strictNullChecks": false,
-    "strictPropertyInitialization": false,
-    "noImplicitReturns": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noImplicitOverride": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "allowUnreachableCode": true
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "paths": {
+      "@finserv/ui/*": ["./packages/ui/src/*"],
+      "@finserv/services/*": ["./services/*"]
+    }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", ".next", "dist"]
 }

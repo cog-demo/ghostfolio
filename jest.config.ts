@@ -1,3 +1,9 @@
-const { getJestProjectsAsync } = require('@nx/jest');
+import type { Config } from 'jest';
 
-export default async () => ({ projects: await getJestProjectsAsync() });
+const config: Config = {
+  projects: ['<rootDir>/services/*/jest.config.ts'],
+  coverageDirectory: '<rootDir>/coverage',
+  collectCoverageFrom: ['services/**/*.ts', '!services/**/*.test.ts', '!services/**/index.ts'],
+};
+
+export default config;
