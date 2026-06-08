@@ -53,6 +53,23 @@ describe('exportService', () => {
 
       expect(result.success).toBe(true);
       expect(result.rowCount).toBeGreaterThan(0);
+      expect(result.csvContent).toBeDefined();
+
+      const header = result.csvContent!.split('\n')[0];
+      expect(header).toBe(
+        'transaction_id,customer,amount,currency,status,timestamp,category,reference'
+      );
+    });
+
+    it('should return CSV content with the correct number of data rows', async () => {
+      const result = await exportTransactions({ customer: 'Oakwood Ventures' });
+
+      expect(result.success).toBe(true);
+      expect(result.csvContent).toBeDefined();
+
+      const lines = result.csvContent!.split('\n').filter(Boolean);
+      // First line is header, rest are data rows
+      expect(lines.length - 1).toBe(result.rowCount);
     });
   });
 });

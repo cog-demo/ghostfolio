@@ -12,14 +12,18 @@ export async function POST(request: NextRequest) {
 
     const result = await exportTransactions({ customer });
 
-    if (!result.success) {
-      return NextResponse.json({ error: result.error }, { status: 500 });
+    if (!result.success || !result.csvContent) {
+      return NextResponse.json({ error: result.error || 'Export failed' }, { status: 500 });
     }
 
-    return NextResponse.json({
-      success: true,
-      rowCount: result.rowCount,
-      message: 'Download started',
+    const filename = `${customer.replace(/\s+/g, '_')}_transactions.csv`;
+
+    return new NextResponse(result.csvContent, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      },
     });
   } catch (error) {
     // TODO: Add structured logging for export failures
